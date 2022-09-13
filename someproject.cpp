@@ -1,35 +1,43 @@
 ﻿#include <iostream>
 
 struct answer {
-	int number[3][1];
+	int number[3][1000];
 };
 
 
 
-void changing(answer& r) {
+answer function() {
+	int c = 0;
+	answer r;
+	r.number[0][0] = { 0 };
+	r.number[1][0] = { 0 };
+	r.number[2][0] = { -1 };
+	do {
+		r.number[2][c]++;
 
-	r.number[2][0]++;
+		if (r.number[2][c] == 10) {
+			r.number[1][c]++;
+			r.number[2][c] = 0;
+		}
+		if (r.number[1][c] == 10) {
+			r.number[0][c]++;
+			r.number[1][c] = 0;
+		}
+		if (c < 999) {
+			r.number[2][c + 1] = r.number[2][c];
+			r.number[1][c + 1] = r.number[1][c];
+			r.number[0][c + 1] = r.number[0][c];
+		}
+		c++;
 
-	if (r.number[2][0] == 10) {
-		r.number[1][0]++;
-		r.number[2][0] = 0;
-	}
-	if (r.number[1][0] == 10) {
-		r.number[0][0]++;
-		r.number[1][0] = 0;
-	}
+	} while (c != 1000);
+	return r;
 }
 
 int main() {
-	int c = 0;
-	answer p;
-	p.number[0][0] = { 0 };
-	p.number[1][0] = { 0 };
-	p.number[2][0] = { -1 };
-	do {
-		changing(p);
-		std::cout << p.number[0][0] << p.number[1][0] << p.number[2][0] << std::endl;
-		c++;
-	} while (c != 1000);
+	auto p = function();
+	for (size_t i = 0; i < 1000; i++) {
+		std::cout << p.number[0][i] << p.number[1][i] << p.number[2][i] << std::endl;
+	}
 	return 0;
 }
